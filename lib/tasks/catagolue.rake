@@ -19,15 +19,11 @@ namespace :catagolue do
     bot.no_update = true
     bot.verbose = true
 
-    Pattern.created_recently.each do |p|
-      next if p.still_life? && p.cells < 30
-
+    Pattern.created_recently.select(&:interesting?).each do |p|
       bot.tweet "New natural #{p.description} #{p.url}"
     end
 
-    Pattern.rare.updated_recently.each do |p|
-      next if p.still_life?
-
+    Pattern.rare.updated_recently.select(&:interesting?).each do |p|
       bot.tweet "New soup producing a rare #{p.description} #{p.url}"
     end
   end

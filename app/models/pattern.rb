@@ -1,4 +1,6 @@
 class Pattern < ActiveRecord::Base
+  include Concerns::Workable
+
   before_update :set_delta
 
   scope :still_lifes, -> { where('apgcode like ?', 'xs%') }
@@ -34,9 +36,21 @@ class Pattern < ActiveRecord::Base
     m && m[1].to_i
   end
 
+  def interesting?
+    if still_life?
+      cells >= 30 || eater2_variant?
+    else
+      true
+    end
+  end
+
   def description
     if still_life?
-      "#{cells}-cell still life"
+      if eater2_variant?
+        "#{cells}-cell eater2 variant"
+      else
+        "#{cells}-cell still life"
+      end
     elsif oscillator?
       "period #{period} oscillator"
     elsif spaceship?
