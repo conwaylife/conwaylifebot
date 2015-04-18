@@ -20,6 +20,8 @@ namespace :catagolue do
     bot.verbose = true
 
     Pattern.created_recently.each do |p|
+      next if p.still_life? && p.cells < 30
+
       bot.tweet "New natural #{p.description} #{p.url}"
     end
 
