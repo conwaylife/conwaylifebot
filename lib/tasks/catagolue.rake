@@ -16,9 +16,6 @@ namespace :catagolue do
   task report: :environment do
     bot = Chatterbot::Bot.new
 
-    bot.no_update = true
-    bot.verbose = true
-
     Pattern.created_recently.select(&:interesting?).each do |p|
       bot.tweet "New natural #{p.description} #{p.url}"
     end
