@@ -123,9 +123,32 @@ class CellSet < Set
   EATER2_VARIANTS = [
     [new(rle: '$b2obo$b2ob2o2$b2obo$2bo!'), new(rle: '6o$o2bobo$o2bo$6o$o2bo$2obo!')], # canonical
     [new(rle: '$b2obo$b2obo$5bo$b2obo$2bo!'), new(rle: '5o$o2bobo$o2bobo$5o$o2bo$2obo!')], # smallest bounding box
+    [new(rle: '4bo$b2o2bo$b2obo$4bo$ob2o$bo!'), new(rle: '4o$o2b2o$o2bobo$4obo$bo2b2o$2b3o!')], # hedonismbot
+    [new(rle: '4bo$b2o2bo$b2obo$4bo$b2obo$bo!'), new(rle: '4o$o2b2o$o2bobo$4obo$o2bobo$ob2o!')], # thinker
+    [new(rle: '4bo$b2o2bo$b2obo$4bo$b2obo$2bo!'), new(rle: '4o$o2b2o$o2bobo$4obo$o2bobo$2obo!')], # bored
+    [new(rle: '4bo$b2o2bo$b2obo$4bo$b2obo!'), new(rle: '4o$o2b2o$o2bobo$4obo$o2bobo$b2o!')], # jordan
+    [new(rle: '4bo$b2o2bo$b2obo$4bo$b2o$3bo!'), new(rle: '4o$o2b2o$o2bobo$4obo$o2b2o$b2o!')], # triskelion
+    [new(rle: '$b2obo$b2ob2o2$ob2o$2bo!'), new(rle: '6o$o2bobo$o2bo$6o$bo2bo$bob2o!')], # boulders
+    [new(rle: '$b2obo$b2obo$5bo$ob2o$2bo!'), new(rle: '5o$o2bobo$o2bobo$5o$bo2bo$bob2o!')], # waiter
+  ]
+
+  EATER2_PRECURSORS = [
+    [new(rle: '$4bo$4b2o2$b2obo$2bo!'), new(rle: '3b3o$3bobo$3bo$6o$o2bo$2obo!')], # canonical
+    [new(rle: '$4bo$4bo$5bo$b2obo$2bo!'), new(rle: '3b2o$3bobo$3bobo$5o$o2bo$2obo!')], # smallest bounding box
+    [new(rle: '4bo$5bo$4bo$4bo$ob2o$bo!'), new(rle: '3bo$3b2o$3bobo$4obo$bo2b2o$2b3o!')], # hedonismbot
+    [new(rle: '4bo$5bo$4bo$4bo$b2obo$bo!'), new(rle: '3bo$3b2o$3bobo$4obo$o2bobo$ob2o!')], # thinker
+    [new(rle: '4bo$5bo$4bo$4bo$b2obo$2bo!'), new(rle: '3bo$3b2o$3bobo$4obo$o2bobo$2obo!')], # bored
+    [new(rle: '4bo$5bo$4bo$4bo$b2obo!'), new(rle: '3bo$3b2o$3bobo$4obo$o2bobo$b2o!')], # jordan
+    [new(rle: '4bo$5bo$4bo$4bo$b2o$3bo!'), new(rle: '3bo$3b2o$3bobo$4obo$o2b2o$b2o!')], # triskelion
+    [new(rle: '$4bo$4b2o2$ob2o$2bo!'), new(rle: '3b3o$3bobo$3bo$6o$bo2bo$bob2o!')], # boulders
+    [new(rle: '$4bo$4bo$5bo$ob2o$2bo!'), new(rle: '3b2o$3bobo$3bobo$5o$bo2bo$bob2o!')], # waiter
   ]
 
   def eater2_variant?
     @eater2_variant ||= matches_any?(EATER2_VARIANTS)
+  end
+
+  def eater2_precursor?
+    @eater2_precursor ||= matches_any?(EATER2_PRECURSORS)
   end
 end

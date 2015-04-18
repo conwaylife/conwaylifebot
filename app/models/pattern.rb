@@ -38,7 +38,7 @@ class Pattern < ActiveRecord::Base
 
   def interesting?
     if still_life?
-      cells >= 30 || eater2_variant?
+      cells >= 30 || eater2_variant? || eater2_precursor?
     else
       true
     end
@@ -48,6 +48,8 @@ class Pattern < ActiveRecord::Base
     if still_life?
       if eater2_variant?
         "#{cells}-cell eater2 variant"
+      elsif eater2_precursor?
+        "#{cells}-cell eater2 precursor"
       else
         "#{cells}-cell still life"
       end
