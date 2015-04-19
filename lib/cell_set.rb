@@ -1,6 +1,8 @@
 require 'set'
 
 class CellSet < Set
+  attr_accessor :meta
+
   TRANSFORMATIONS = [
       [1, 0, 0, 1],
       [0, -1, 1, 0],
@@ -25,7 +27,7 @@ class CellSet < Set
   end
 
   def decode_wechsler(data)
-    _, encoded = data.split('_', 2)
+    self.meta, encoded = data.split('_', 2)
 
     clear
 
@@ -144,11 +146,17 @@ class CellSet < Set
     [new(rle: '$4bo$4bo$5bo$ob2o$2bo!'), new(rle: '3b2o$3bobo$3bobo$5o$bo2bo$bob2o!')], # waiter
   ]
 
+  BEACON = [new(rle: '$b2o$bo$4bo$3b2o!'), new(rle: '4o$o2b2o$ob4o$4obo$b2o2bo$2b4o!')]
+
   def eater2_variant?
     @eater2_variant ||= matches_any?(EATER2_VARIANTS)
   end
 
   def eater2_precursor?
     @eater2_precursor ||= matches_any?(EATER2_PRECURSORS)
+  end
+
+  def beacon_based?
+    @beacon_based ||= (!meta || meta == 'xp2') && matches_any?([BEACON])
   end
 end

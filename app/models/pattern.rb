@@ -39,6 +39,8 @@ class Pattern < ActiveRecord::Base
   def interesting?
     if still_life?
       cells >= 30 || eater2_variant? || eater2_precursor?
+    elsif oscillator?
+      !beacon_based?
     else
       true
     end
