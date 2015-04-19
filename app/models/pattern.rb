@@ -58,6 +58,8 @@ class Pattern < ActiveRecord::Base
     elsif oscillator?
       if griddle_variant?
         "griddle variant"
+      elsif cuphook_variant?
+        "cuphook variant"
       else
         "period #{period} oscillator"
       end
