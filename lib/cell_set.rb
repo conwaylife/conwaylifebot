@@ -148,6 +148,8 @@ class CellSet < Set
 
   BEACON = [new(rle: '$b2o$bo$4bo$3b2o!'), new(rle: '4o$o2b2o$ob4o$4obo$b2o2bo$2b4o!')]
 
+  GRIDDLE = [new(rle: '$4bo$2bobo$bo4bo$2b4o!'), new(rle: 'b6o$4ob3o$2obob3o$2b4o!')]
+
   def eater2_variant?
     @eater2_variant ||= matches_any?(EATER2_VARIANTS)
   end
@@ -158,5 +160,9 @@ class CellSet < Set
 
   def beacon_based?
     @beacon_based ||= (!meta || meta == 'xp2') && matches_any?([BEACON])
+  end
+
+  def griddle_variant?
+    @griddle_variant ||= (!meta || meta == 'xp2') && matches_any?([GRIDDLE])
   end
 end

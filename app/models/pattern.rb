@@ -56,7 +56,11 @@ class Pattern < ActiveRecord::Base
         "#{cells}-cell still life"
       end
     elsif oscillator?
-      "period #{period} oscillator"
+      if griddle_variant?
+        "griddle variant"
+      else
+        "period #{period} oscillator"
+      end
     elsif spaceship?
       'spaceship'
     else
