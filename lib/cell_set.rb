@@ -149,6 +149,7 @@ class CellSet < Set
   BEACON = [new(rle: '$b2o$bo$4bo$3b2o!'), new(rle: '4o$o2b2o$ob4o$4obo$b2o2bo$2b4o!')]
   GRIDDLE = [new(rle: '$4bo$2bobo$bo4bo$2b4o!'), new(rle: 'b6o$4ob3o$2obob3o$2b4o!')]
   CUPHOOK = [new(rle: 'o$o$o2bo$2bo!'), new(rle: 'b4o$b4o$b2obo2$b3o!')]
+  CANDLEFROBRA = [new(rle: '$o$b2obo$3bobo$4bo!'), new(rle: '6o$b5o$o2bobo$3obo$4o$b5o!')]
 
   def eater2_variant?
     @eater2_variant ||= matches_any?(EATER2_VARIANTS)
@@ -167,6 +168,10 @@ class CellSet < Set
   end
 
   def cuphook_variant?
-    @griddle_variant ||= (!meta || meta == 'xp3') && matches_any?([CUPHOOK])
+    @cuphook_variant ||= (!meta || meta == 'xp3') && matches_any?([CUPHOOK])
+  end
+
+  def candlefrobra_variant?
+    @candlefrobra_variant ||= (!meta || meta == 'xp3') && matches_any?([CANDLEFROBRA])
   end
 end
