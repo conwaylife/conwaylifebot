@@ -62,6 +62,8 @@ class Pattern < ActiveRecord::Base
         "cuphook variant"
       elsif candlefrobra_variant?
         "candlefrobra variant"
+      elsif bipole_variant?
+        "bipole variant"
       else
         "period #{period} oscillator"
       end

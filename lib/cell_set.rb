@@ -150,6 +150,7 @@ class CellSet < Set
   GRIDDLE = [new(rle: '$4bo$2bobo$bo4bo$2b4o!'), new(rle: 'b6o$4ob3o$2obob3o$2b4o!')]
   CUPHOOK = [new(rle: 'o$o$o2bo$2bo!'), new(rle: 'b4o$b4o$b2obo2$b3o!')]
   CANDLEFROBRA = [new(rle: '$o$b2obo$3bobo$4bo!'), new(rle: '6o$b5o$o2bobo$3obo$4o$b5o!')]
+  BIPOLE = [new(rle: '2o$obo2$2bobo$3b2o!'), new(rle: '2b3o$bob2o$5o$2obo$3o!')]
 
   def eater2_variant?
     @eater2_variant ||= matches_any?(EATER2_VARIANTS)
@@ -173,5 +174,9 @@ class CellSet < Set
 
   def candlefrobra_variant?
     @candlefrobra_variant ||= (!meta || meta == 'xp3') && matches_any?([CANDLEFROBRA])
+  end
+
+  def bipole_variant?
+    @bipole_variant ||= (!meta || meta == 'xp2') && matches_any?([BIPOLE])
   end
 end
