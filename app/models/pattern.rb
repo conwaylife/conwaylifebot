@@ -64,6 +64,10 @@ class Pattern < ActiveRecord::Base
         "candlefrobra variant"
       elsif bipole_variant?
         "bipole variant"
+      elsif test_tube_baby_variant?
+        "test tube baby variant"
+      elsif spark_coil_variant?
+        "spark coil variant"
       else
         "period #{period} oscillator"
       end

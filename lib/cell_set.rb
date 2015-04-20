@@ -151,6 +151,8 @@ class CellSet < Set
   CUPHOOK = [new(rle: 'o$o$o2bo$2bo!'), new(rle: 'b4o$b4o$b2obo2$b3o!')]
   CANDLEFROBRA = [new(rle: '$o$b2obo$3bobo$4bo!'), new(rle: '6o$b5o$o2bobo$3obo$4o$b5o!')]
   BIPOLE = [new(rle: '2o$obo2$2bobo$3b2o!'), new(rle: '2b3o$bob2o$5o$2obo$3o!')]
+  TEST_TUBE_BABY = [new(rle: 'o$b3o$4bo$4bo$b3o$o!'), new(rle: 'b4o$o3bo$4o$4o$o3bo$b4o!')]
+  SPARK_COIL = [new(rle: 'o3bo$b3o3$b3o$o3bo!'), new(rle: 'b3o$o3bo$b3o$b3o$o3bo$b3o!')]
 
   def eater2_variant?
     @eater2_variant ||= matches_any?(EATER2_VARIANTS)
@@ -178,5 +180,13 @@ class CellSet < Set
 
   def bipole_variant?
     @bipole_variant ||= (!meta || meta == 'xp2') && matches_any?([BIPOLE])
+  end
+
+  def test_tube_baby_variant?
+    @test_tube_baby_variant ||= (!meta || meta == 'xp2') && matches_any?([TEST_TUBE_BABY])
+  end
+
+  def spark_coil_variant?
+    @spark_coil_variant ||= (!meta || meta == 'xp2') && matches_any?([SPARK_COIL])
   end
 end
