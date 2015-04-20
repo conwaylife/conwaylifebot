@@ -68,6 +68,8 @@ class Pattern < ActiveRecord::Base
         "test tube baby variant"
       elsif spark_coil_variant?
         "spark coil variant"
+      elsif great_on_off_variant?
+        "great on-off variant"
       else
         "period #{period} oscillator"
       end
