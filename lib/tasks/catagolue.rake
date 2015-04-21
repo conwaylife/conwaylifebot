@@ -17,8 +17,6 @@ namespace :catagolue do
   desc 'Report interesting patterns'
   task report: :environment do
     bot = Chatterbot::Bot.new
-    bot.debug_mode = true
-    bot.verbose = true
 
     Pattern.asymmetric.created_recently.select(&:interesting?).each do |p|
       bot.tweet "New natural #{p.description} #{p.url}"
@@ -28,8 +26,8 @@ namespace :catagolue do
       bot.tweet "New soup producing a rare #{p.description} #{p.url}"
     end
 
-    Pattern.group(:apgcode).having('COUNT(delta IS NOT NULL) = ?', 0).each do |p|
-      next unless symmetric? && interesting?
+    Pattern.group(:apgcode).having('COUNT(delta) = ?', 0).each do |p|
+      next unless p.symmetric? && p.interesting?
       bot.tweet "New #{p.description} found in a symmetric soup #{p.url}"
     end
   end
