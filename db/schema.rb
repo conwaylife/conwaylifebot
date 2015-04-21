@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150417171608) do
+ActiveRecord::Schema.define(version: 20150421170421) do
 
   create_table "patterns", force: true do |t|
     t.string   "apgcode"
@@ -19,8 +19,9 @@ ActiveRecord::Schema.define(version: 20150417171608) do
     t.integer  "delta",       limit: 8
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "symmetry",              default: "C1", null: false
   end
 
-  add_index "patterns", ["apgcode"], name: "index_patterns_on_apgcode", unique: true
+  add_index "patterns", ["apgcode", "symmetry"], name: "index_patterns_on_apgcode_and_symmetry", unique: true
 
 end

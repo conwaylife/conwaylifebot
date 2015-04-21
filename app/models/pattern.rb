@@ -3,6 +3,9 @@ class Pattern < ActiveRecord::Base
 
   before_update :set_delta
 
+  scope :asymmetric, -> { where(symmetry: 'C1') }
+  scope :symmetric, -> { where('symmetry <> ?', 'C1') }
+
   scope :still_lifes, -> { where('apgcode like ?', 'xs%') }
   scope :oscillators, -> { where('apgcode like ?', 'xp%') }
   scope :spaceships,  -> { where('apgcode like ?', 'xq%') }
@@ -11,6 +14,8 @@ class Pattern < ActiveRecord::Base
 
   scope :created_recently, -> { where('delta IS NULL') }
   scope :updated_recently, -> { where('delta > ?', 0) }
+
+  SYMMETRIES = %w{ 8x32 C1 C2_1 C2_2 C2_4 C4_1 C4_4 D2_+1 D2_+2 D2_x D4_+1 D4_+2 D4_+4 D4_x1 D4_x4 D8_1 D8_4 }
 
   def still_life?
     apgcode.first(2) == 'xs'
@@ -22,6 +27,18 @@ class Pattern < ActiveRecord::Base
 
   def spaceship?
     apgcode.first(2) == 'xq'
+  end
+
+  def growing?
+    apgcode.first(2) == 'yl'
+  end
+
+  def asymmetric?
+    symmetry == 'C1'
+  end
+
+  def symmetric?
+    !asymmetric?
   end
 
   def cells
@@ -37,12 +54,16 @@ class Pattern < ActiveRecord::Base
   end
 
   def interesting?
-    if still_life?
-      cells >= 30 || eater2_variant? || eater2_precursor?
-    elsif oscillator?
-      !beacon_based?
+    if asymmetric?
+      if still_life?
+        cells >= 30 || eater2_variant? || eater2_precursor?
+      elsif oscillator?
+        !beacon_based?
+      else
+        true
+      end
     else
-      true
+      (oscillator? && period > 3) || spaceship? || growing?
     end
   end
 
@@ -77,6 +98,8 @@ class Pattern < ActiveRecord::Base
       end
     elsif spaceship?
       'spaceship'
+    elsif growing?
+      'growing object'
     else
       'object'
     end
