@@ -70,6 +70,8 @@ class Pattern < ActiveRecord::Base
         "spark coil variant"
       elsif great_on_off_variant?
         "great on-off variant"
+      elsif light_bulb_variant?
+        "light bulb variant"
       else
         "period #{period} oscillator"
       end
