@@ -6,9 +6,10 @@ class Pattern < ActiveRecord::Base
   scope :asymmetric, -> { where(symmetry: 'C1') }
   scope :symmetric, -> { where('symmetry <> ?', 'C1') }
 
-  scope :still_lifes, -> { where('apgcode like ?', 'xs%') }
-  scope :oscillators, -> { where('apgcode like ?', 'xp%') }
-  scope :spaceships,  -> { where('apgcode like ?', 'xq%') }
+  scope :still_lifes,  -> { where('apgcode LIKE ?', 'xs%') }
+  scope :oscillators,  -> { where('apgcode LIKE ?', 'xp%') }
+  scope :spaceships,   -> { where('apgcode LIKE ?', 'xq%') }
+  scope :undetermined, -> { where('apgcode LIKE ? OR apgcode LIKE ? OR apgcode = ?', 'ov%', 'zz%', 'PATHOLOGICAL') }
 
   scope :rare, -> { where('occurrences < ?', 5) }
 
@@ -63,7 +64,7 @@ class Pattern < ActiveRecord::Base
         true
       end
     else
-      (oscillator? && period > 3) || spaceship? || growing?
+      oscillator? ? period > 3 : !still_life?
     end
   end
 

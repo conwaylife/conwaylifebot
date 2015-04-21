@@ -30,5 +30,9 @@ namespace :catagolue do
       next unless p.symmetric? && p.interesting?
       bot.tweet "New #{p.description} found in a symmetric soup #{p.url}"
     end
+
+    Pattern.symmetric.undetermined.updated_recently.each do |p|
+      bot.tweet "New #{p.description} found in a symmetric soup #{p.url}"
+    end
   end
 end
