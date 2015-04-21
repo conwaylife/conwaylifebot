@@ -34,6 +34,10 @@ class Pattern < ActiveRecord::Base
     apgcode.first(2) == 'yl'
   end
 
+  def oversized?
+    apgcode.first(2) == 'ov'
+  end
+
   def asymmetric?
     symmetry == 'C1'
   end
@@ -101,6 +105,8 @@ class Pattern < ActiveRecord::Base
       'spaceship'
     elsif growing?
       'growing object'
+    elsif oversized?
+      'oversized object'
     else
       'object'
     end

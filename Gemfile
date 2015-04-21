@@ -3,6 +3,7 @@ source 'https://rubygems.org'
 gem 'dotenv-rails', groups: [:development, :test]
 
 gem 'chatterbot', '~> 0.9.3'
+gem 'indefinite_article', '~> 0.2.0'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.1.2'

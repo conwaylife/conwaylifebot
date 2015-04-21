@@ -57,6 +57,8 @@ GEM
       http_parser.rb
     http_parser.rb (0.6.0)
     i18n (0.7.0)
+    indefinite_article (0.2.0)
+      activesupport
     jbuilder (2.2.13)
       activesupport (>= 3.0.0, < 5)
       multi_json (~> 1.2)
@@ -152,6 +154,7 @@ DEPENDENCIES
   chatterbot (~> 0.9.3)
   coffee-rails (~> 4.0.0)
   dotenv-rails
+  indefinite_article (~> 0.2.0)
   jbuilder (~> 2.0)
   jquery-rails
   rails (= 4.1.2)
