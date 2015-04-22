@@ -151,7 +151,7 @@ class CellSet < Set
   CUPHOOK = [new(rle: 'o$o$o2bo$2bo!'), new(rle: 'b4o$b4o$b2obo2$b3o!')]
   CANDLEFROBRA = [new(rle: '$o$b2obo$3bobo$4bo!'), new(rle: '6o$b5o$o2bobo$3obo$4o$b5o!')]
   BIPOLE = [new(rle: '2o$obo2$2bobo$3b2o!'), new(rle: '2b3o$bob2o$5o$2obo$3o!')]
-  TEST_TUBE_BABY = [new(rle: 'o$b3o$4bo$4bo$b3o$o!'), new(rle: 'b4o$o3bo$4o$4o$o3bo$b4o!')]
+  TEST_TUBE_BABY = [new(rle: '$bo2bo$bo2bo$bo2bo$2b2o!'), new(rle: 'bo2bo$ob2obo$ob2obo$ob2obo$2o2b2o!')]
   SPARK_COIL = [new(rle: 'o3bo$b3o3$b3o$o3bo!'), new(rle: 'b3o$o3bo$b3o$b3o$o3bo$b3o!')]
   GREAT_ON_OFF = [new(rle: 'o$ob2o$bo2bo$4bo$3bo$4b2o!'), new(rle: 'b5o$bo2b2o$ob2obo$4obo$3ob2o$b3o!')]
   LIGHT_BULB = [new(rle: '$2b3o$bo3bo$bo3bo$2bobo!'), new(rle: '7o$2o3b2o$ob3obo$ob3obo$2obob2o!')]
