@@ -61,7 +61,7 @@ class Pattern < ActiveRecord::Base
   def interesting?
     if asymmetric?
       if still_life?
-        cells >= 30 || eater2_variant? || eater2_precursor?
+        cells >= 30 || eater2_variant? || eater2_precursor? || pi_splitting_catalyst?
       elsif oscillator?
         !beacon_based?
       else
@@ -78,6 +78,8 @@ class Pattern < ActiveRecord::Base
         "#{cells}-cell eater2 variant"
       elsif eater2_precursor?
         "#{cells}-cell eater2 precursor"
+      elsif pi_splitting_catalyst?
+        "pi splitting catalyst"
       else
         "#{cells}-cell still life"
       end
