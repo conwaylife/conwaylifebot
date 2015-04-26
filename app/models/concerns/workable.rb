@@ -4,7 +4,7 @@ module Concerns
       :griddle_variant?, :cuphook_variant?, :candlefrobra_variant?,
       :bipole_variant?, :test_tube_baby_variant?, :spark_coil_variant?,
       :great_on_off_variant?, :light_bulb_variant?, :pi_splitting_catalyst?,
-      to: :cell_set
+      :snark_catalyst?, to: :cell_set
 
     def cell_set
       @cell_set ||= CellSet.new(wechsler: apgcode)

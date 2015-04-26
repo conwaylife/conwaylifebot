@@ -148,6 +148,11 @@ class CellSet < Set
 
   PI_SPLITTING_CATALYST = [new(rle: '$7bo$5b2obo$8bo$b2o2b3o$2bobo$3bobo$4bo!'), new(rle: '6b4o$5b2ob2o$7bobo$5b3obo$3b2o3b2o$2obob5o$3obob4o$4ob5o$10o!')]
 
+  SNARK_CATALYST = [
+    [new(rle: '$8bo$4b2obobo$o2bobobobo$3bobobobo$4ob2o2bo$4bo!'), new(rle: '10o$8obo$4o2bobo$b2obobobo$3obobobo$4bo2b2o$2b2ob2o!')],
+    [new(rle: '$8bo$4b2obobo$3bobobobo$o2bobobobo$4ob2o2bo$4bo!'), new(rle: '10o$b7obo$4o2bobo$3obobobo$b2obobobo$4bo2b2o$2b2ob2o!')],
+  ]
+
   BEACON = [new(rle: '$b2o$bo$4bo$3b2o!'), new(rle: '4o$o2b2o$ob4o$4obo$b2o2bo$2b4o!')]
   GRIDDLE = [new(rle: '$4bo$2bobo$bo4bo$2b4o!'), new(rle: 'b6o$4ob3o$2obob3o$2b4o!')]
   CUPHOOK = [new(rle: 'o$o$o2bo$2bo!'), new(rle: 'b4o$b4o$b2obo2$b3o!')]
@@ -168,6 +173,10 @@ class CellSet < Set
 
   def pi_splitting_catalyst?
     @pi_splitting_catalyst ||= matches_any?([PI_SPLITTING_CATALYST])
+  end
+
+  def snark_catalyst?
+    @snark_catalyst ||= matches_any?(SNARK_CATALYST)
   end
 
   def beacon_based?
