@@ -28,30 +28,38 @@ namespace :catagolue do
   end
 
   namespace :report do
+    def bot
+      @bot ||= Chatterbot::Bot.new
+    end
+
+    def update(pattern, text)
+      if pattern.still_life? || pattern.oscillator? || pattern.spaceship?
+        bot.client.update_with_media(text, pattern.image)
+      else
+        bot.tweet text
+      end
+    end
+
     desc 'Report interesting patterns in asymmetric soups'
     task asymmetric: :environment do
-      bot = Chatterbot::Bot.new
-
       Pattern.asymmetric.created_recently.select(&:interesting?).each do |p|
-        bot.tweet "New natural #{p.description} #{p.url}"
+        update p, "New natural #{p.description} #{p.url}"
       end
 
       Pattern.asymmetric.rare.updated_recently.select(&:interesting?).each do |p|
-        bot.tweet "New soup producing a rare #{p.description} #{p.url}"
+        update p, "New soup producing a rare #{p.description} #{p.url}"
       end
     end
 
     desc 'Report interesting patterns in symmetric soups'
     task symmetric: :environment do
-      bot = Chatterbot::Bot.new
-
       Pattern.group(:apgcode).having('COUNT(delta) = ?', 0).each do |p|
         next unless p.symmetric? && p.interesting?
-        bot.tweet "New #{p.description} found in a symmetric soup #{p.url}"
+        update p, "New #{p.description} found in a symmetric soup #{p.url}"
       end
 
       Pattern.symmetric.undetermined.updated_recently.each do |p|
-        bot.tweet "New symmetric soup producing #{p.description.with_indefinite_article} #{p.url}"
+        update p, "New symmetric soup producing #{p.description.with_indefinite_article} #{p.url}"
       end
     end
   end

@@ -122,6 +122,139 @@ class CellSet < Set
     end
   end
 
+  def bounding_box(generations = 1)
+    xmin, xmax, ymin, ymax = nil, nil, nil, nil
+    p = self
+    generations.times do
+      p.each do |x, y|
+        if !xmin || x < xmin
+          xmin = x
+        end
+        if !xmax || x > xmax
+          xmax = x
+        end
+        if !ymin || y < ymin
+          ymin = y
+        end
+        if !ymax || y > ymax
+          ymax = y
+        end
+      end
+      p = p.evolve
+    end
+    [xmin, xmax, ymin, ymax]
+  end
+
+  def image
+    @image ||= begin
+      cell_size = 14
+      grid_width = 2
+      cell_color = 'rgb(0,0,0)'
+      grid_color = 'rgb(200,200,200)'
+
+      p = self
+      xmin, xmax, ymin, ymax = p.bounding_box(period)
+      if xmax - xmin < ymax - ymin
+        p = p.transform(0, 0, 0, 1, -1, 0)
+        xmin, xmax, ymin, ymax = p.bounding_box(period)
+      end
+
+      x0, y0 = xmin - 1, ymin - 1
+      width, height = xmax - x0 + 2, ymax - y0 + 2
+
+      canvas_width = (cell_size + grid_width) * width + grid_width
+      canvas_height = (cell_size + grid_width) * height + grid_width
+
+      image_list = Magick::ImageList.new
+
+      #period.times do
+      1.times do
+        gc = Magick::Draw.new
+        gc.stroke(grid_color)
+        gc.fill(grid_color)
+
+        (0..width).each do |x|
+          x1 = (cell_size + grid_width) * x
+          gc.rectangle(x1, 0, x1 + grid_width - 1, canvas_height)
+        end
+
+        (0..height).each do |y|
+          y1 = (cell_size + grid_width) * y
+          gc.rectangle(0, y1, canvas_width, y1 + grid_width - 1)
+        end
+
+        gc.stroke(cell_color)
+        gc.fill(cell_color)
+
+        p.each do |x, y|
+          x1 = (cell_size + grid_width) * (x - x0) + grid_width
+          y1 = (cell_size + grid_width) * (y - y0) + grid_width
+          gc.rectangle(x1, y1, x1 + cell_size - 1, y1 + cell_size - 1)
+        end
+
+        frame = Magick::Image.new(canvas_width, canvas_height)
+        gc.draw(frame)
+
+        image_list << frame
+
+        p = p.evolve
+      end
+      image_list.delay = 25
+
+      Tempfile.new(['pattern', '.gif']).tap {|f| image_list.write(f.path) }
+    end
+  end
+
+  def evolve(generations = 1)
+    result = self.to_set
+
+    generations.times do
+      temp = result.inject({}) do |t, coords|
+        t.merge(coords => 9)
+      end
+
+      result.each do |x, y|
+        (-1..1).each do |dy|
+          (-1..1).each do |dx|
+            temp[[x+dx, y+dy]] ||= 0
+            temp[[x+dx, y+dy]] += 1
+          end
+        end
+      end
+
+      result = temp.select {|_, v| v.in?([3, 12, 13]) }.keys
+    end
+
+    self.class.new(result)
+  end
+
+  def still_life?
+    meta && meta.first(2) == 'xs'
+  end
+
+  def oscillator?
+    meta && meta.first(2) == 'xp'
+  end
+
+  def spaceship?
+    meta && meta.first(2) == 'xq'
+  end
+
+  def growing?
+    meta && meta.first(2) == 'yl'
+  end
+
+  def oversized?
+    meta && meta.first(2) == 'ov'
+  end
+
+  def period
+    return 1 if still_life?
+
+    m = %r{x[pq](\d+)}.match(meta)
+    m && m[1].to_i
+  end
+
   EATER2_VARIANTS = [
     [new(rle: '$b2obo$b2ob2o2$b2obo$2bo!'), new(rle: '6o$o2bobo$o2bo$6o$o2bo$2obo!')], # canonical
     [new(rle: '$b2obo$b2obo$5bo$b2obo$2bo!'), new(rle: '5o$o2bobo$o2bobo$5o$o2bo$2obo!')], # smallest bounding box

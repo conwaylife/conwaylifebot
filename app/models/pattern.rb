@@ -18,26 +18,6 @@ class Pattern < ActiveRecord::Base
 
   SYMMETRIES = %w{ 8x32 C1 C2_1 C2_2 C2_4 C4_1 C4_4 D2_+1 D2_+2 D2_x D4_+1 D4_+2 D4_+4 D4_x1 D4_x4 D8_1 D8_4 }
 
-  def still_life?
-    apgcode.first(2) == 'xs'
-  end
-
-  def oscillator?
-    apgcode.first(2) == 'xp'
-  end
-
-  def spaceship?
-    apgcode.first(2) == 'xq'
-  end
-
-  def growing?
-    apgcode.first(2) == 'yl'
-  end
-
-  def oversized?
-    apgcode.first(2) == 'ov'
-  end
-
   def asymmetric?
     symmetry == 'C1'
   end
@@ -48,13 +28,6 @@ class Pattern < ActiveRecord::Base
 
   def cells
     m = %r{xs(\d+)_}.match(apgcode)
-    m && m[1].to_i
-  end
-
-  def period
-    return 1 if still_life?
-
-    m = %r{x[pq](\d+)_}.match(apgcode)
     m && m[1].to_i
   end
 
