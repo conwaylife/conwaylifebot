@@ -14,9 +14,9 @@ namespace :social do
   desc 'Favorite tweets that mention Conway\'s Game of Life'
   task favorite: :environment do
     bot = Chatterbot::Bot.new
-    bot.blacklist = 'alcheagle, golautomat'
+    bot.blacklist = %w{ alcheagle golautomat deetahanator }
 
-    bot.search('conways game of life') do |tweet|
+    bot.search('conway game of life') do |tweet|
       bot.favorite(tweet)
     end
   end
