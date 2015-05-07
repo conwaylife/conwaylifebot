@@ -34,7 +34,7 @@ class Pattern < ActiveRecord::Base
   def interesting?
     if asymmetric?
       if still_life?
-        cells >= 30 || eater2_variant? || eater2_precursor? || pi_splitting_catalyst? || snark_catalyst?
+        cells == 13 || cells >= 30 || eater2_variant? || eater2_precursor? || pi_splitting_catalyst? || snark_catalyst?
       elsif oscillator?
         !beacon_based?
       else
