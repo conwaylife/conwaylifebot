@@ -41,7 +41,13 @@ class Pattern < ActiveRecord::Base
         true
       end
     else
-      oscillator? ? period > 3 : !still_life?
+      if oscillator?
+        period > 3
+      elsif oversized?
+        !['ov_p24', 'ov_p30', 'ov_p46'].include?(apgcode)
+      else
+        !still_life?
+      end
     end
   end
 
