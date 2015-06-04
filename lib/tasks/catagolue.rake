@@ -59,6 +59,7 @@ namespace :catagolue do
       end
 
       Pattern.symmetric.undetermined.updated_recently.each do |p|
+        next unless p.symmetric? && p.interesting?
         update p, "New symmetric soup producing #{p.description.with_indefinite_article} #{p.url}"
       end
     end
