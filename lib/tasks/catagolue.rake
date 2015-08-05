@@ -46,9 +46,9 @@ namespace :catagolue do
         update p, "New natural #{p.description} #{p.url}"
       end
 
-      Pattern.asymmetric.rare.updated_recently.select(&:interesting?).each do |p|
-        update p, "New soup producing a rare #{p.description} #{p.url}"
-      end
+      # Pattern.asymmetric.rare.updated_recently.select(&:interesting?).each do |p|
+      #   update p, "New soup producing a rare #{p.description} #{p.url}"
+      # end
     end
 
     desc 'Report interesting patterns in symmetric soups'
