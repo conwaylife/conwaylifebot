@@ -1,5 +1,6 @@
 class Pattern < ActiveRecord::Base
   include Concerns::Workable
+  include Concerns::Contributed
 
   before_update :set_delta
 

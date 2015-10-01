@@ -43,7 +43,7 @@ namespace :catagolue do
     desc 'Report interesting patterns in asymmetric soups'
     task asymmetric: :environment do
       Pattern.asymmetric.created_recently.select(&:interesting?).each do |p|
-        update p, "New natural #{p.description} #{p.url}"
+        update p, "New natural #{p.description} found by #{p.contributor} #{p.url}"
       end
 
       # Pattern.asymmetric.rare.updated_recently.select(&:interesting?).each do |p|
@@ -55,7 +55,7 @@ namespace :catagolue do
     task symmetric: :environment do
       Pattern.group(:apgcode).having('COUNT(delta) = ?', 0).each do |p|
         next unless p.symmetric? && p.interesting?
-        update p, "New #{p.description} found in a symmetric soup #{p.url}"
+        update p, "New #{p.description} found in a symmetric soup by #{p.contributor} #{p.url}"
       end
 
       Pattern.symmetric.undetermined.updated_recently.each do |p|
