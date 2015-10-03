@@ -55,7 +55,7 @@ namespace :catagolue do
     task symmetric: :environment do
       Pattern.group(:apgcode).having('COUNT(delta) = ?', 0).each do |p|
         next unless p.symmetric? && p.interesting?
-        update p, "New #{p.description} found in a symmetric soup by #{p.contributor} #{p.url}"
+        update p, "New #{p.description} found in a symmetric soup #{p.url}"
       end
 
       Pattern.symmetric.undetermined.updated_recently.each do |p|
