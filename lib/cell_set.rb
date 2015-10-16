@@ -145,10 +145,10 @@ class CellSet < Set
     [xmin, xmax, ymin, ymax]
   end
 
-  def image
+  def image(options = {cell_size: 14, grid_width: 2})
     @image ||= begin
-      cell_size = 14
-      grid_width = 2
+      cell_size = options[:cell_size]
+      grid_width = options[:grid_width]
       cell_color = 'rgb(0,0,0)'
       grid_color = 'rgb(200,200,200)'
 
