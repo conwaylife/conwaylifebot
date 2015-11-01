@@ -170,17 +170,20 @@ class CellSet < Set
       #period.times do
       1.times do
         gc = Magick::Draw.new
-        gc.stroke(grid_color)
-        gc.fill(grid_color)
 
-        (0..width).each do |x|
-          x1 = (cell_size + grid_width) * x
-          gc.rectangle(x1, 0, x1 + grid_width - 1, canvas_height)
-        end
+        if grid_width > 0
+          gc.stroke(grid_color)
+          gc.fill(grid_color)
 
-        (0..height).each do |y|
-          y1 = (cell_size + grid_width) * y
-          gc.rectangle(0, y1, canvas_width, y1 + grid_width - 1)
+          (0..width).each do |x|
+            x1 = (cell_size + grid_width) * x
+            gc.rectangle(x1, 0, x1 + grid_width - 1, canvas_height)
+          end
+
+          (0..height).each do |y|
+            y1 = (cell_size + grid_width) * y
+            gc.rectangle(0, y1, canvas_width, y1 + grid_width - 1)
+          end
         end
 
         gc.stroke(cell_color)
@@ -189,7 +192,11 @@ class CellSet < Set
         p.each do |x, y|
           x1 = (cell_size + grid_width) * (x - x0) + grid_width
           y1 = (cell_size + grid_width) * (y - y0) + grid_width
-          gc.rectangle(x1, y1, x1 + cell_size - 1, y1 + cell_size - 1)
+          if cell_size > 1
+            gc.rectangle(x1, y1, x1 + cell_size - 1, y1 + cell_size - 1)
+          else
+            gc.point(x1, y1)
+          end
         end
 
         frame = Magick::Image.new(canvas_width, canvas_height)

@@ -36,8 +36,6 @@ class Pattern < ActiveRecord::Base
     if asymmetric?
       if still_life?
         cells == 14 || cells >= 33 || eater2_variant? || eater2_precursor? || pi_splitting_catalyst? || snark_catalyst?
-      elsif oscillator?
-        !beacon_based? || cells >= 33
       else
         true
       end
