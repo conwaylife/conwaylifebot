@@ -43,7 +43,8 @@ namespace :catagolue do
     desc 'Report interesting patterns in asymmetric soups'
     task asymmetric: :environment do
       Pattern.asymmetric.created_recently.select(&:interesting?).each do |p|
-        update p, "New natural #{p.description} found by #{p.contributor} #{p.url}"
+        contributor = p.contributor
+        update p, "New natural #{p.description}#{contributor ? " found by #{contributor}" : ""} #{p.url}"
       end
 
       # Pattern.asymmetric.rare.updated_recently.select(&:interesting?).each do |p|
