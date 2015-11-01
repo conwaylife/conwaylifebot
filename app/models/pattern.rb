@@ -35,9 +35,9 @@ class Pattern < ActiveRecord::Base
   def interesting?
     if asymmetric?
       if still_life?
-        cells == 14 || cells >= 30 || eater2_variant? || eater2_precursor? || pi_splitting_catalyst? || snark_catalyst?
+        cells == 14 || cells >= 33 || eater2_variant? || eater2_precursor? || pi_splitting_catalyst? || snark_catalyst?
       elsif oscillator?
-        !beacon_based?
+        !beacon_based? || cells >= 33
       else
         true
       end
@@ -82,6 +82,8 @@ class Pattern < ActiveRecord::Base
         "great on-off variant"
       elsif light_bulb_variant?
         "light bulb variant"
+      elsif beacon_based?
+        "beacon-based oscillator"
       else
         "period #{period} oscillator"
       end

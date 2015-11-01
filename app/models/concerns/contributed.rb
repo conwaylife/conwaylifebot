@@ -13,6 +13,8 @@ module Concerns
           "'#{name.sub(%r{@.*}, '')}'"
         end
       end
+    rescue
+      nil
     end
 
     private
