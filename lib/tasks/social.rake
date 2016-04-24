@@ -17,7 +17,11 @@ namespace :social do
     bot.blacklist = %w{ alcheagle golautomat deetahanator conwayslives conwaylife }
 
     bot.search('conway game of life') do |tweet|
-      bot.favorite(tweet)
+      begin
+        bot.favorite(tweet)
+      rescue Twitter::Error::Unauthorized => e
+        Rails.logger.warn("#{tweet.user.screen_name}: #{e}")
+      end
     end
   end
 end
