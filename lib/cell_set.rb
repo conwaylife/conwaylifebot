@@ -167,8 +167,8 @@ class CellSet < Set
 
       image_list = Magick::ImageList.new
 
-      #period.times do
-      1.times do
+      # TODO: move the grid gradually for spaceships
+      (oscillator? ? period : 1).times do
         gc = Magick::Draw.new
 
         if grid_width > 0
