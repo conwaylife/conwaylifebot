@@ -4,10 +4,10 @@ gem 'dotenv-rails', groups: [:development, :test]
 
 gem 'chatterbot', '~> 0.9.3'
 gem 'indefinite_article', '~> 0.2.0'
-gem 'rmagick', '2.13.2', git: 'http://github.com/rmagick/rmagick.git'
+gem 'rmagick'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.1.2'
+gem 'rails', '~> 4.1'
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3'
 # Use SCSS for stylesheets
