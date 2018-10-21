@@ -28,6 +28,7 @@ class CellSet < Set
 
   def decode_wechsler(data)
     self.meta, encoded = data.split('_', 2)
+    return if encoded.blank?
 
     clear
 

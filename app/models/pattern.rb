@@ -5,7 +5,7 @@ class Pattern < ActiveRecord::Base
   before_update :set_delta
 
   scope :asymmetric, -> { where(symmetry: 'C1') }
-  scope :symmetric, -> { where('symmetry <> ?', 'C1') }
+  scope :symmetric, -> { where.not(symmetry: 'C1') }
 
   scope :still_lifes,  -> { where('apgcode LIKE ?', 'xs%') }
   scope :oscillators,  -> { where('apgcode LIKE ?', 'xp%') }
@@ -14,8 +14,7 @@ class Pattern < ActiveRecord::Base
 
   scope :rare, -> { where('occurrences < ?', 5) }
 
-  scope :created_recently, -> { where('delta IS NULL') }
-  scope :updated_recently, -> { where('delta > ?', 0) }
+  scope :created_recently, -> { joins('INNER JOIN publications ON publications.symmetry = patterns.symmetry AND patterns.created_at > publications.updated_at') }
 
   SYMMETRIES = %w{ 8x32 C1 C2_1 C2_2 C2_4 C4_1 C4_4 D2_+1 D2_+2 D2_x D4_+1 D4_+2 D4_+4 D4_x1 D4_x4 D8_1 D8_4 }
 
@@ -36,12 +35,14 @@ class Pattern < ActiveRecord::Base
     if asymmetric?
       if still_life?
         cells == 14 || cells >= 33 || eater2_variant? || eater2_precursor? || pi_splitting_catalyst? || snark_catalyst?
+      elsif oscillator?
+        !beacon_based?
       else
         true
       end
     else
       if oscillator?
-        period > 3
+        period > 6
       elsif oversized?
         !['ov_p24', 'ov_p30', 'ov_p46', 'ov_p177'].include?(apgcode)
       else

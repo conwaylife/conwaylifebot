@@ -11,17 +11,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150421170421) do
+ActiveRecord::Schema.define(version: 20181021161748) do
 
-  create_table "patterns", force: true do |t|
-    t.string   "apgcode"
+  create_table "patterns", force: :cascade do |t|
+    t.string   "apgcode",     limit: 255
     t.integer  "occurrences", limit: 8
     t.integer  "delta",       limit: 8
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "symmetry",              default: "C1", null: false
+    t.string   "symmetry",    limit: 255, default: "C1", null: false
   end
 
   add_index "patterns", ["apgcode", "symmetry"], name: "index_patterns_on_apgcode_and_symmetry", unique: true
+
+  create_table "publications", force: :cascade do |t|
+    t.string   "symmetry",   null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
 end
